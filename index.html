@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard de Estudos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: #e5e7eb;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        margin-bottom: 10px;
+      }
+      .container {
+        max-width: 900px;
+        margin: auto;
+      }
+      .card {
+        background: #020617;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+      input,
+      button {
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+      }
+      input {
+        width: 100%;
+        margin-bottom: 8px;
+      }
+      button {
+        background: #6366f1;
+        color: #fff;
+        cursor: pointer;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #1e293b;
+      }
+      .done {
+        text-decoration: line-through;
+        opacity: 0.6;
+      }
+      .small {
+        font-size: 0.85rem;
+        opacity: 0.8;
+      }
+      canvas {
+        max-width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>📚 Dashboard de Estudos</h1>
+
+      <!-- Metas -->
+      <div class="card">
+        <h2>Definir metas por categoria</h2>
+        <input id="metaCategoria" placeholder="Categoria (ex: SUS)" />
+        <input id="metaTempo" type="number" placeholder="Meta em minutos" />
+        <button onclick="setMeta()">Salvar meta</button>
+      </div>
+
+      <!-- Adicionar estudo -->
+      <div class="card">
+        <h2>Adicionar estudo</h2>
+        <input id="titulo" placeholder="Ex: SUS – Princípios" />
+        <input id="tempo" type="number" placeholder="Tempo (minutos)" />
+        <input id="categoria" placeholder="Categoria (ex: SUS, Inglês)" />
+        <button onclick="addStudy()">Adicionar</button>
+      </div>
+
+      <!-- Gráfico -->
+      <div class="card">
+        <h2>Gráfico por categoria</h2>
+        <canvas id="grafico"></canvas>
+      </div>
+
+      <!-- Filtro -->
+      <div class="card">
+        <h2>Filtrar por categoria</h2>
+        <input
+          id="filtro"
+          placeholder="Digite a categoria"
+          oninput="render()"
+        />
+      </div>
+
+      <!-- Lista -->
+      <div class="card">
+        <h2>Estudos</h2>
+        <ul id="lista"></ul>
+        <p id="total" class="small"></p>
+      </div>
+
+      <!-- Metas renderizadas -->
+      <div class="card" id="boxMetas">
+        <h2>Progresso das metas</h2>
+      </div>
+    </div>
+
+    <script>
+      const KEY = "dashboard_estudos"
+      const META_KEY = "dashboard_metas"
+
+      const cores = {
+        SUS: "#22c55e",
+        Inglês: "#3b82f6",
+        "Front-end": "#eab308",
+        Concurso: "#a855f7",
+        Geral: "#64748b",
+      }
+
+      function corCategoria(cat) {
+        return cores[cat] || "#f97316"
+      }
+
+      function getData() {
+        return JSON.parse(localStorage.getItem(KEY)) || []
+      }
+
+      function saveData(data) {
+        localStorage.setItem(KEY, JSON.stringify(data))
+      }
+
+      function getMetas() {
+        return JSON.parse(localStorage.getItem(META_KEY)) || {}
+      }
+
+      function saveMetas(metas) {
+        localStorage.setItem(META_KEY, JSON.stringify(metas))
+      }
+
+      function addStudy() {
+        const titulo = document.getElementById("titulo").value.trim()
+        const tempo = Number(document.getElementById("tempo").value)
+        const categoria =
+          document.getElementById("categoria").value.trim() || "Geral"
+
+        if (!titulo || !tempo) {
+          alert("Preencha todos os campos")
+          return
+        }
+
+        const data = getData()
+        data.push({ titulo, tempo, categoria, done: false })
+        saveData(data)
+
+        document.getElementById("titulo").value = ""
+        document.getElementById("tempo").value = ""
+        document.getElementById("categoria").value = ""
+
+        render()
+      }
+
+      function toggle(index) {
+        const data = getData()
+        data[index].done = !data[index].done
+        saveData(data)
+        render()
+      }
+
+      function setMeta() {
+        const categoria = document.getElementById("metaCategoria").value.trim()
+        const tempo = Number(document.getElementById("metaTempo").value)
+
+        if (!categoria || !tempo) {
+          alert("Preencha a meta corretamente")
+          return
+        }
+
+        const metas = getMetas()
+        metas[categoria] = tempo
+        saveMetas(metas)
+
+        document.getElementById("metaCategoria").value = ""
+        document.getElementById("metaTempo").value = ""
+
+        render()
+      }
+
+      function render() {
+        const lista = document.getElementById("lista")
+        const total = document.getElementById("total")
+        const filtro = document.getElementById("filtro").value.toLowerCase()
+
+        const data = getData()
+        lista.innerHTML = ""
+
+        let minutos = 0
+
+        data.forEach((item, i) => {
+          if (!item.categoria.toLowerCase().includes(filtro)) return
+          minutos += item.tempo
+
+          const li = document.createElement("li")
+          li.innerHTML = `
+        <span class="${item.done ? "done" : ""}">
+          ${item.titulo} - <strong>${item.categoria}</strong> (${item.tempo}min)
+        </span>
+        <button onclick="toggle(${i})">✓</button>
+      `
+          lista.appendChild(li)
+        })
+
+        total.textContent = `Tempo total: ${minutos} minutos`
+
+        renderChart(data)
+        renderMetas(data)
+      }
+
+      function renderChart(data) {
+        const ctx = document.getElementById("grafico")
+        if (!ctx) return
+
+        const resumo = {}
+        data.forEach((item) => {
+          resumo[item.categoria] = (resumo[item.categoria] || 0) + item.tempo
+        })
+
+        const labels = Object.keys(resumo)
+        const values = Object.values(resumo)
+
+        if (window.chart) window.chart.destroy()
+
+        window.chart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels,
+            datasets: [
+              {
+                data: values,
+                backgroundColor: labels.map((l) => corCategoria(l)),
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+          },
+        })
+      }
+
+      function renderMetas(data) {
+        const metas = getMetas()
+        const box = document.getElementById("boxMetas")
+        let html = "<h2>Progresso das metas</h2>"
+
+        for (const categoria in metas) {
+          const estudado = data
+            .filter((i) => i.categoria === categoria)
+            .reduce((s, i) => s + i.tempo, 0)
+
+          const perc = Math.min(
+            100,
+            Math.round((estudado / metas[categoria]) * 100)
+          )
+
+          html += `
+        <p><strong>${categoria}</strong> — ${estudado}/${
+            metas[categoria]
+          } min</p>
+        <div style="background:#1e293b;border-radius:8px;overflow:hidden;margin-bottom:12px">
+          <div style="width:${perc}%;background:${corCategoria(
+            categoria
+          )};padding:6px"></div>
+        </div>
+      `
+        }
+
+        box.innerHTML = html
+      }
+
+      render()
+    </script>
+  </body>
+</html>
