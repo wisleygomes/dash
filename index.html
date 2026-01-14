@@ -9,62 +9,121 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
+      /* =========================
+   MOBILE FIRST
+========================= */
+
       body {
         font-family: Arial, sans-serif;
         background: #0f172a;
         color: #e5e7eb;
         margin: 0;
-        padding: 20px;
+        padding: 12px;
       }
+
       h1 {
-        margin-bottom: 10px;
+        font-size: 1.4rem;
+        margin-bottom: 12px;
       }
+
+      h2 {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+      }
+
       .container {
-        max-width: 900px;
+        max-width: 100%;
         margin: auto;
       }
+
       .card {
         background: #020617;
         border-radius: 12px;
-        padding: 16px;
-        margin-bottom: 16px;
+        padding: 14px;
+        margin-bottom: 14px;
       }
+
       input,
       button {
-        padding: 10px;
+        width: 100%;
+        padding: 12px;
         border-radius: 8px;
         border: none;
+        font-size: 1rem;
       }
+
       input {
-        width: 100%;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
       }
+
       button {
         background: #6366f1;
         color: #fff;
         cursor: pointer;
       }
+
       ul {
         list-style: none;
         padding: 0;
+        margin: 0;
       }
+
       li {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 0;
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 0;
         border-bottom: 1px solid #1e293b;
       }
+
+      li button {
+        width: 100%;
+      }
+
       .done {
         text-decoration: line-through;
         opacity: 0.6;
       }
+
       .small {
         font-size: 0.85rem;
         opacity: 0.8;
       }
+
       canvas {
         max-width: 100%;
+      }
+
+      /* =========================
+   DESKTOP
+========================= */
+
+      @media (min-width: 768px) {
+        body {
+          padding: 20px;
+        }
+
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        h2 {
+          font-size: 1.25rem;
+        }
+
+        .container {
+          max-width: 900px;
+        }
+
+        li {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        li button {
+          width: auto;
+        }
       }
     </style>
   </head>
