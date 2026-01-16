@@ -3,159 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <title>Dashboard de Estudos</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#020617" />
+
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
+    <meta name="theme-color" content="#020617" />
 
     <link rel="manifest" href="manifest.json" />
     <link rel="apple-touch-icon" href="icon-192.png" />
+    <link rel="stylesheet" href="style.css" />
 
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-      /* =========================
-   MOBILE FIRST
-========================= */
-
-      body {
-        font-family: Arial, sans-serif;
-        background: #0f172a;
-        color: #e5e7eb;
-        margin: 0;
-        padding: 12px;
-        min-height: 100vh;
-        overscroll-behavior: none;
-        touch-action: manipulation;
-        box-sizing: border-box;
-      }
-
-      h1 {
-        font-size: 1.4rem;
-        margin-bottom: 12px;
-      }
-
-      h2 {
-        font-size: 1.1rem;
-        margin-bottom: 8px;
-      }
-
-      .container {
-        max-width: 100%;
-        margin: auto;
-        .form,
-        .input-group {
-          width: 100%;
-          padding: 0 1rem;
-        }
-      }
-
-      .card {
-        background: #020617;
-        border-radius: 12px;
-        padding: 14px;
-        margin-bottom: 14px;
-      }
-
-      input,
-      button {
-        width: 100%;
-        padding: 12px;
-        border-radius: 8px;
-        border: none;
-        font-size: 1rem;
-        select,
-        button {
-          width: 100%;
-          max-width: 100%;
-        }
-      }
-
-      input {
-        margin-bottom: 10px;
-      }
-      .card {
-        padding: 1rem;
-        overflow: hidden;
-      }
-
-      button {
-        background: #6366f1;
-        color: #fff;
-        cursor: pointer;
-      }
-
-      ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      li {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        padding: 10px 0;
-        border-bottom: 1px solid #1e293b;
-      }
-
-      li button {
-        width: 100%;
-      }
-
-      .done {
-        text-decoration: line-through;
-        opacity: 0.6;
-      }
-
-      .small {
-        font-size: 0.85rem;
-        opacity: 0.8;
-      }
-
-      canvas {
-        max-width: 100%;
-      }
-
-      /* =========================
-   DESKTOP
-========================= */
-
-      @media (min-width: 768px) {
-        body {
-          padding: 20px;
-        }
-
-        h1 {
-          font-size: 1.8rem;
-        }
-
-        h2 {
-          font-size: 1.25rem;
-        }
-
-        .container {
-          max-width: 900px;
-        }
-
-        li {
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        li button {
-          width: auto;
-        }
-      }
-    </style>
   </head>
+
   <body>
     <div class="container">
       <h1>📚 Dashboard de Estudos</h1>
+      <button id="themeToggle" aria-label="Alternar tema">🌙</button>
 
       <!-- Metas -->
       <div class="card">
@@ -377,6 +242,31 @@
 
       render()
     </script>
+    <script>
+      const toggle = document.getElementById("themeToggle")
+      const savedTheme = localStorage.getItem("theme")
+
+      function setTheme(theme) {
+        document.body.setAttribute("data-theme", theme)
+        localStorage.setItem("theme", theme)
+        toggle.textContent = theme === "light" ? "🌞" : "🌙"
+      }
+
+      if (savedTheme) {
+        setTheme(savedTheme)
+      } else {
+        const prefersLight = window.matchMedia(
+          "(prefers-color-scheme: light)"
+        ).matches
+        setTheme(prefersLight ? "light" : "dark")
+      }
+
+      toggle.addEventListener("click", () => {
+        const current = document.body.getAttribute("data-theme")
+        setTheme(current === "light" ? "dark" : "light")
+      })
+    </script>
+
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("sw.js")

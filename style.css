@@ -1,0 +1,216 @@
+/* =========================
+   THEMES
+========================= */
+
+:root {
+  --bg: #0f172a;
+  --card: #020617;
+  --text: #e5e7eb;
+  --border: #1e293b;
+  --primary: #6366f1;
+}
+
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #020617;
+  --border: #e5e7eb;
+  --primary: #4f46e5;
+}
+
+/* =========================
+   RESET + BASE
+========================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 12px;
+  min-height: 100vh;
+
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
+body,
+.card,
+input,
+select,
+button,
+li {
+  transition: background-color 0.35s ease, color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* =========================
+   TIPOGRAFIA
+========================= */
+h1 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.small {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 0.5rem;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+/* =========================
+   FORMULÁRIOS
+========================= */
+input,
+select,
+button {
+  width: 100%;
+  max-width: 100%;
+
+  padding: 12px;
+  margin-bottom: 10px;
+
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+input,
+select {
+  background: var(--card);
+  color: var(--text);
+}
+
+button {
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* =========================
+   LISTA
+========================= */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+li button {
+  width: 100%;
+}
+
+.done {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* =========================
+   GRÁFICO
+========================= */
+canvas {
+  width: 100% !important;
+  max-width: 100%;
+}
+
+/* =========================
+   DESKTOP
+========================= */
+@media (min-width: 768px) {
+  body {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  .container {
+    max-width: 900px;
+  }
+
+  li {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  li button {
+    width: auto;
+  }
+}
+
+#themeToggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+
+  font-size: 1.2rem;
+  padding: 8px 12px;
+  border-radius: 999px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+#themeToggle:active {
+  transform: scale(0.95);
+}
+
+#themeToggle {
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.15s ease;
+}
+
+#themeToggle:hover {
+  background: var(--border);
+}
+
+#themeToggle:active {
+  transform: scale(0.9) rotate(-10deg);
+}
