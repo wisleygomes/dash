@@ -30,6 +30,7 @@
         min-height: 100vh;
         overscroll-behavior: none;
         touch-action: manipulation;
+        box-sizing: border-box;
       }
 
       h1 {
@@ -45,6 +46,11 @@
       .container {
         max-width: 100%;
         margin: auto;
+        .form,
+        .input-group {
+          width: 100%;
+          padding: 0 1rem;
+        }
       }
 
       .card {
@@ -61,10 +67,19 @@
         border-radius: 8px;
         border: none;
         font-size: 1rem;
+        select,
+        button {
+          width: 100%;
+          max-width: 100%;
+        }
       }
 
       input {
         margin-bottom: 10px;
+      }
+      .card {
+        padding: 1rem;
+        overflow: hidden;
       }
 
       button {
