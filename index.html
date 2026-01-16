@@ -68,6 +68,7 @@
       </div>
     </div>
 
+    <!-- ===== SCRIPT PRINCIPAL ===== -->
     <script>
       const KEY = "dashboard_estudos"
       const META_KEY = "dashboard_metas"
@@ -122,7 +123,7 @@
         render()
       }
 
-      function toggle(index) {
+      function toggleStudy(index) {
         const data = getData()
         data[index].done = !data[index].done
         saveData(data)
@@ -164,11 +165,13 @@
 
           const li = document.createElement("li")
           li.innerHTML = `
-        <span class="${item.done ? "done" : ""}">
-          ${item.titulo} - <strong>${item.categoria}</strong> (${item.tempo}min)
-        </span>
-        <button onclick="toggle(${i})">✓</button>
-      `
+            <span class="${item.done ? "done" : ""}">
+              ${item.titulo} - <strong>${item.categoria}</strong> (${
+            item.tempo
+          }min)
+            </span>
+            <button onclick="toggleStudy(${i})">✓</button>
+          `
           lista.appendChild(li)
         })
 
@@ -226,15 +229,15 @@
           )
 
           html += `
-        <p><strong>${categoria}</strong> — ${estudado}/${
+            <p><strong>${categoria}</strong> — ${estudado}/${
             metas[categoria]
           } min</p>
-        <div style="background:#1e293b;border-radius:8px;overflow:hidden;margin-bottom:12px">
-          <div style="width:${perc}%;background:${corCategoria(
+            <div style="background:#1e293b;border-radius:8px;overflow:hidden;margin-bottom:12px">
+              <div style="width:${perc}%;background:${corCategoria(
             categoria
           )};padding:6px"></div>
-        </div>
-      `
+            </div>
+          `
         }
 
         box.innerHTML = html
@@ -242,14 +245,16 @@
 
       render()
     </script>
+
+    <!-- ===== TEMA CLARO / ESCURO ===== -->
     <script>
-      const toggle = document.getElementById("themeToggle")
+      const themeToggle = document.getElementById("themeToggle")
       const savedTheme = localStorage.getItem("theme")
 
       function setTheme(theme) {
         document.body.setAttribute("data-theme", theme)
         localStorage.setItem("theme", theme)
-        toggle.textContent = theme === "light" ? "🌞" : "🌙"
+        themeToggle.textContent = theme === "light" ? "🌞" : "🌙"
       }
 
       if (savedTheme) {
@@ -261,12 +266,13 @@
         setTheme(prefersLight ? "light" : "dark")
       }
 
-      toggle.addEventListener("click", () => {
+      themeToggle.addEventListener("click", () => {
         const current = document.body.getAttribute("data-theme")
         setTheme(current === "light" ? "dark" : "light")
       })
     </script>
 
+    <!-- ===== SERVICE WORKER ===== -->
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("sw.js")

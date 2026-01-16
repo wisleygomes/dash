@@ -1,11 +1,14 @@
 {
   "name": "Dashboard de Estudos",
   "short_name": "Estudos",
+  "description": "Dashboard de estudos com metas por categoria, gráficos e funcionamento offline.",
   "start_url": ".",
+  "scope": ".",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#020617",
   "orientation": "portrait",
+  "categories": ["education", "productivity"],
   "icons": [
     {
       "src": "icon-192.png",
@@ -15,7 +18,8 @@
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

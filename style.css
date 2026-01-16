@@ -1,126 +1,144 @@
 /* =========================
-   THEMES
-========================= */
-
-:root {
-  --bg: #0f172a;
-  --card: #020617;
-  --text: #e5e7eb;
-  --border: #1e293b;
-  --primary: #6366f1;
-}
-
-[data-theme="light"] {
-  --bg: #f8fafc;
-  --card: #ffffff;
-  --text: #020617;
-  --border: #e5e7eb;
-  --primary: #4f46e5;
-}
-
-/* =========================
    RESET + BASE
 ========================= */
-*,
-*::before,
-*::after {
+
+* {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  padding: 12px;
-  min-height: 100vh;
-
-  font-family: Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-
-  overscroll-behavior: none;
-  touch-action: manipulation;
+  padding: 0;
 }
 
-body,
-.card,
-input,
-select,
-button,
-li {
-  transition: background-color 0.35s ease, color 0.35s ease,
-    border-color 0.35s ease;
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* =========================
-   TIPOGRAFIA
+   TEMAS
 ========================= */
-h1 {
-  font-size: 1.4rem;
-  margin-bottom: 12px;
+
+body[data-theme="dark"] {
+  background-color: #0f172a;
+  color: #e5e7eb;
 }
 
-h2 {
-  font-size: 1.1rem;
-  margin-bottom: 8px;
-}
-
-.small {
-  font-size: 0.85rem;
-  opacity: 0.8;
+body[data-theme="light"] {
+  background-color: #f8fafc;
+  color: #020617;
 }
 
 /* =========================
    LAYOUT
 ========================= */
+
 .container {
-  max-width: 100%;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 0 0.5rem;
+  padding: 1rem;
 }
 
-.card {
-  background: var(--card);
-  border-radius: 12px;
-  padding: 1rem;
-  margin-bottom: 14px;
-  overflow: hidden;
+h1 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
 }
 
 /* =========================
-   FORMULÁRIOS
+   CARDS
 ========================= */
+
+.card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+/* cores dos cards por tema */
+body[data-theme="dark"] {
+  --card-bg: #020617;
+}
+
+body[data-theme="light"] {
+  --card-bg: #ffffff;
+}
+
+/* =========================
+   INPUTS & BOTÕES
+========================= */
+
 input,
-select,
 button {
   width: 100%;
-  max-width: 100%;
-
-  padding: 12px;
-  margin-bottom: 10px;
-
+  padding: 0.75rem;
+  border-radius: 10px;
   border: none;
-  border-radius: 8px;
   font-size: 1rem;
 }
 
-input,
-select {
-  background: var(--card);
-  color: var(--text);
+input {
+  margin-bottom: 0.6rem;
+}
+
+body[data-theme="dark"] input {
+  background: #1e293b;
+  color: #e5e7eb;
+}
+
+body[data-theme="light"] input {
+  background: #e5e7eb;
+  color: #020617;
 }
 
 button {
-  background: var(--primary);
+  background: #6366f1;
   color: #fff;
+  font-weight: 600;
   cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 button:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* =========================
+   BOTÃO DE TEMA
+========================= */
+
+#themeToggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #6366f1;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
 }
 
 /* =========================
    LISTA
 ========================= */
+
 ul {
   list-style: none;
   padding: 0;
@@ -130,13 +148,13 @@ ul {
 li {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
 }
 
 li button {
-  width: 100%;
+  align-self: flex-start;
 }
 
 .done {
@@ -144,28 +162,26 @@ li button {
   opacity: 0.6;
 }
 
+.small {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
 /* =========================
    GRÁFICO
 ========================= */
+
 canvas {
-  width: 100% !important;
   max-width: 100%;
 }
 
 /* =========================
    DESKTOP
 ========================= */
-@media (min-width: 768px) {
-  body {
-    padding: 20px;
-  }
 
+@media (min-width: 768px) {
   h1 {
     font-size: 1.8rem;
-  }
-
-  h2 {
-    font-size: 1.25rem;
   }
 
   .container {
@@ -174,43 +190,11 @@ canvas {
 
   li {
     flex-direction: row;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
   }
 
   li button {
     width: auto;
   }
-}
-
-#themeToggle {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-
-  font-size: 1.2rem;
-  padding: 8px 12px;
-  border-radius: 999px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-}
-
-#themeToggle:active {
-  transform: scale(0.95);
-}
-
-#themeToggle {
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.15s ease;
-}
-
-#themeToggle:hover {
-  background: var(--border);
-}
-
-#themeToggle:active {
-  transform: scale(0.9) rotate(-10deg);
 }
