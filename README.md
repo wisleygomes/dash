@@ -1,10 +1,8 @@
-p# 📚 Dashboard de Estudos
+# 📚 Dashboard de Estudos
 
 <p align="center">
  <img alt="dashboard" src="./assets/capa.jpg" width="40%">
  </p>
-
-## 🚀 Tecnologias
 
 Projeto de **Dashboard de Estudos** desenvolvido com **HTML, CSS e JavaScript puro**, focado em organização, metas e visualização de progresso. Todos os dados são salvos localmente no navegador usando **LocalStorage**.
 
@@ -46,7 +44,7 @@ Projeto de **Dashboard de Estudos** desenvolvido com **HTML, CSS e JavaScript pu
   - Estudos e metas salvos no LocalStorage
   - Dados mantidos mesmo após fechar o navegador
 
-* [Acesse o Dashboard](https://wisleygomes.github.io/dash)
+- [Acesse o Dashboard](https://wisleygomes.github.io/dash)
 
 ---
 
@@ -57,17 +55,40 @@ Projeto de **Dashboard de Estudos** desenvolvido com **HTML, CSS e JavaScript pu
 - JavaScript (ES6+)
 - LocalStorage
 - Chart.js
+- Progressive Web App (PWA)
 
 ---
 
 ## 📂 Estrutura do projeto
+
+````text
+/dashboard-estudos
+│
+├── index.html      # Aplicação principal
+├── manifest.json   # Configurações PWA
+├── sw.js            # Service Worker (offline)
+├── README.md       # Documentação do projeto
 
 ```text
 /dashboard-estudos
 │
 ├── index.html   # Aplicação completa (HTML + CSS + JS)
 ├── README.md    # Documentação do projeto
-```
+````
+
+---
+
+## 📱 Progressive Web App (PWA)
+
+Este projeto foi desenvolvido como um **Progressive Web App (PWA)**, oferecendo uma experiência semelhante a um aplicativo nativo.
+
+### Recursos PWA
+
+- 📲 Instalável no celular (Android e iOS)
+- 🚀 Executa em tela cheia (sem barra do navegador)
+- 📴 Funciona offline após o primeiro acesso
+- ⚡ Carregamento rápido e dados persistentes
+- 📱 Layout totalmente **mobile-first**
 
 ---
 
@@ -76,7 +97,7 @@ Projeto de **Dashboard de Estudos** desenvolvido com **HTML, CSS e JavaScript pu
 1. Clone o repositório:
 
 ```bash
-git (https://github.com/wisleygomes/dashboard-estudos.git)
+git clone https://github.com/seu-usuario/dashboard-estudos.git
 ```
 
 2. Abra o arquivo `index.html` no navegador
@@ -110,7 +131,7 @@ Este projeto foi criado com foco em:
 ## 💼 Autor
 
 **Wisley Gomes**
-Estudante e desenvolvedor Front-end em formação
+Estudante de engenharia de software e desenvolvedor Front-end em formação.
 
 ---
 

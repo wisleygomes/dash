@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <title>Dashboard de Estudos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#020617" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="icon-192.png" />
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,6 +27,9 @@
         color: #e5e7eb;
         margin: 0;
         padding: 12px;
+        min-height: 100vh;
+        overscroll-behavior: none;
+        touch-action: manipulation;
       }
 
       h1 {
@@ -350,6 +361,11 @@
       }
 
       render()
+    </script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("sw.js")
+      }
     </script>
   </body>
 </html>
